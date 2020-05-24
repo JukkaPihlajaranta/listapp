@@ -1,0 +1,23 @@
+:root{
+  
+  
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container{
+  width: 350px;
+  margin: auto;
+
+}
+
+
+.navbar{
+  background: linear-gradient(to bottom, rgb(135, 171, 192), white);
+  display: flex;
+  
+  
+}
