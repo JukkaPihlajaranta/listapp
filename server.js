@@ -51,3 +51,6 @@ app.listen(PORT, console.log(`Server is listering ${PORT}`));
 //   "proxy": "http://localhost:8000"
 
 //"heroku-postbuild": "npm run install-client && npm run build"
+//"build": "cd client && npm run build",
+// "build": "cd client && npm run build",
+// "install-client": "cd client && npm install",
