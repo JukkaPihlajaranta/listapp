@@ -14,10 +14,54 @@
 
 }
 
+.subContainer{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
+/*BUTTONS*/
+a,
+button{
+  border: none;
+  padding: 5px 8px;
+  outline: none;
+  border-radius: 5px;
+}
+
+.btn.green{
+  background: lime;
+  color:black
+}
+
+.btn.green:hover{
+  background: green;
+  color:white
+}
+
+/* input{
+  background: white;
+  outline: none;
+  border: 1px solid lightblue ;
+  height: 25px;
+} */
 
 .navbar{
+  padding: 10px 5px;
   background: linear-gradient(to bottom, rgb(135, 171, 192), white);
   display: flex;
+}
+
+.firstRow{
+  display: flex;
+  justify-content: space-between;
+}
+
+.shoplistWrapper{
   
-  
+  background: linear-gradient(white 0%, rgb(135, 171, 192) 30%,  rgb(135, 171, 192) 60%, white);
+}
+
+.oneItemRow{
+  margin-left: 25px;
 }

@@ -10,10 +10,10 @@ const ShoppingList = require('../models/shoppinglist_model');
 //GET all users' shoplists
 router.post('/allshoplists', (req, res) =>{
 
-    const userId = req.body.userId;
+    // const userId = req.body.userId; CHANGEEEEEEEEEEEE
     
-
-    ShoppingList.find({ownerId: userId})
+    console.log(req.body);
+    ShoppingList.find({/*ownerId: userId*/})
     .then((data) => {
         res.json(data);
     })
@@ -119,6 +119,7 @@ router.put('/modifyItemCheckMark', (req, res) => {
     const targetItem = req.body.targetItem;
     const readyItems = req.body.readyItemsCount;
 
+    
     ShoppingList.findById(targetList)
     .then(shoplist => {
         shoplist.readyItemsCount = readyItems;
