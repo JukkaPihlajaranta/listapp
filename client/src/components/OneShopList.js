@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {Link} from "react-router-dom";
 
 export default class OneShopList extends React.Component {
 
@@ -22,14 +23,14 @@ export default class OneShopList extends React.Component {
             itemCount: this.props.value.shopItemList.length,
             showList: this.props.value.showList,
 
-            tempCheckboxId: '',
         }
     }
 
     componentDidMount(){
         this.ShowList();
-
     };
+
+
 
     ToServer_ItemCheckBox(id){
 
@@ -55,9 +56,7 @@ export default class OneShopList extends React.Component {
             readyItems: tempCount
         })
 
-
         const payload = {
-
             targetList: this.props.value._id,
             targetItem: id,
             readyItemsCount: tempCount
@@ -113,7 +112,6 @@ export default class OneShopList extends React.Component {
         })
 
     }
-
     
     ToServer_ShowHideList(){
         
@@ -143,31 +141,34 @@ export default class OneShopList extends React.Component {
 
     }
     
+    truncate(str, n){
+        return (str.length > n) ? str.substr(0, n-1) + '..' : str;
+    };
 
     ShowList(){
         return (
             <div>
                 
                 <div className="firstRow">
-                    <div><input type="checkbox" checked={this.state.showList} onChange={this.ToServer_ShowHideList} /> {this.state.listName} ({this.state.readyItems}/{this.state.itemCount})</div>
+                    <div><input type="checkbox" checked={this.state.showList} onChange={this.ToServer_ShowHideList} /> {this.truncate(this.state.listName, 14)} ({this.state.readyItems}/{this.state.itemCount})</div>
                     
                     {this.state.showList &&
                         <div>
                             <button className="btn green" onClick={this.ToServer_ResetCheckBoxes}>Reset</button>
-                            <button className="btn green" style={{marginLeft: 5}}>Edit</button>
+                            <Link className="btn green" to={`/edit/${this.state.listId}`} style={{marginLeft: 5}}>Edit</Link>
                         </div>
                     }
                     
                 </div>
 
                 {this.state.showList &&
-                <div className="shoplistWrapper">
+                <div className="allShoplistWrapper">
                 {this.state.itemList.map((item, index) => (
 
-                <div className="oneItemRow" key={index}> 
-                    <input type="checkbox" checked={item.checked} onChange={() => this.ToServer_ItemCheckBox(item._id)} />
-                    {item.itemName}
-                </div>
+                    <div className="oneItemRow" key={index}> 
+                        <input className="checkbox" type="checkbox" checked={item.checked} onChange={() => this.ToServer_ItemCheckBox(item._id)} />
+                        <div className={item.checked ? "puchasedItem" : "non_puchasedItem"}>{item.itemName}</div>
+                    </div>
 
 
                 ))}

@@ -8,12 +8,12 @@ const ShoppingList = require('../models/shoppinglist_model');
 //ROUTES
 
 //GET all users' shoplists
-router.post('/allshoplists', (req, res) =>{
+router.get('/allshoplists/:id', (req, res) =>{
 
-    // const userId = req.body.userId; CHANGEEEEEEEEEEEE
     
-    console.log(req.body);
-    ShoppingList.find({/*ownerId: userId*/})
+    const userId = req.params.id;
+    
+    ShoppingList.find({ownerId: userId})
     .then((data) => {
         res.json(data);
     })
@@ -59,10 +59,11 @@ router.put('/edit/:id', (req, res) => {
     
     ShoppingList.findById(req.params.id)
     .then(shoplist => {
-        shoplist.shopItemList.push({itemName: `${req.body.listName}`});
+        shoplist.shopItemList.push({itemName: `${req.body.addedItem}`});
 
         shoplist.save()
-        .then(() => res.json('Updated!'))
+        .then(() => res.json(shoplist))
+        // .then(() => res.json('Updated!'))
         .catch(err => res.status(400).json('Error: ', err))
     })
     .catch(err => res.status(400).json('Error: ', err))

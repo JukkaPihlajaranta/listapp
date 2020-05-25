@@ -14,10 +14,12 @@ export default class ShoppingLists extends React.Component {
 
         this.ToServer_NewList = this.ToServer_NewList.bind(this);
         this.OnChange = this.OnChange.bind(this);
-        this.Get_AllLists = this.Get_AllLists.bind(this);
+        this.ToServer_GetLists = this.ToServer_GetLists.bind(this);
 
         this.state ={
             shoplists: [],
+            userId: '',
+            userName: '',
             newListName: '',
             errorMsg: ''
         }
@@ -25,8 +27,14 @@ export default class ShoppingLists extends React.Component {
     }
 
     componentDidMount(){
-        this.Get_AllLists();
-        // console.log(this.context);
+        
+        this.setState({
+            userId: this.context.userData.user.id,
+            userName: this.context.userData.user.displayName,
+        }, ()=>{
+            this.ToServer_GetLists(); //get the info after in the setState callback
+        });
+
     }
 
     OnChange(e){
@@ -35,29 +43,21 @@ export default class ShoppingLists extends React.Component {
         });
     };
 
-    Get_AllLists(){
-        
-        const payload = {
-            something: 'some'
-        }
+    ToServer_GetLists(){
         
         axios({
-            url: '/api/allshoplists',
-            method: 'POST',
-            data: payload
+            url: `/api/allshoplists/${this.state.userId}`,
+            method: 'GET',
+            // data: payload
         })
         .then(res => {
 
             this.setState({
                 shoplists: res.data
             })
-            // console.log(res.data);
             
         })
         .catch(err => {
-            // this.setState({
-            //     errorMsg: err.data.msg
-            // })
             console.log(err);
         })
     }
@@ -68,22 +68,25 @@ export default class ShoppingLists extends React.Component {
 
             const payload = {
                 listName: this.state.newListName,
-                userId: '',
-                userName: '',
+                userId: this.state.userId,
+                userName: this.state.userName,
             }
     
-            this.setState({
-                errorMsg: ''
-            })
+
 
             axios({
                 url: '/api/createShopList',
                 method: 'POST',
                 data: payload
             })
-            .then(res => {
+            .then(() => {
                 console.log('data added successfully!');
-                //add to context thing user auth
+                
+                this.setState({
+                    errorMsg: ''
+                })
+
+                this.ToServer_GetLists();
             })
             .catch(err => {
                 // this.setState({
@@ -115,9 +118,9 @@ export default class ShoppingLists extends React.Component {
 
     render(){
         return <div>
-                {this.state.errorMsg !== '' &&  this.state.errorMsg}
-                <input placeholder=" New list" name="newListName" value={this.state.newListName} onChange={this.OnChange} />
-                <button className="btn green" onClick={() => this.ToServer_NewList}>Create</button>
+                {this.state.errorMsg !== '' &&  <span className="errorMsg">{this.state.errorMsg}</span> }
+                <input className="textInput" placeholder=" New list" name="newListName" value={this.state.newListName} onChange={this.OnChange} />
+                <button className="btn green" onClick={() => this.ToServer_NewList()}>Create</button>
                 <br/><br/>
                 {this.DisplayShopLists(this.state.shoplists)}
 

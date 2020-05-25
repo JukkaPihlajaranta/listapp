@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 
 export default class LoginPage extends React.Component {
 
+    
+
     constructor (props){
         super(props);
 
@@ -40,14 +42,18 @@ export default class LoginPage extends React.Component {
         })
         .then(res => {
             console.log(res);
-            //add to context thing user auth
+            console.log(res.data.token);
+            
+            localStorage.setItem('auth-token', res.data.token);
+            
 
             this.setState({
                 email:'',
                 password:'',
                 errorMsg:''
             },() => {
-                this.props.history.push('/')
+                window.location = '/'; //gives the token and user name etc.
+                // this.props.history.push('/');
             });
         })
         .catch(err => {
@@ -58,18 +64,27 @@ export default class LoginPage extends React.Component {
         })
     };
 
+    MoveToHomePage(){
+
+    }
 
     render(){
         return <div>
-            
-                Fill in the form and sign in!
+
+                <br/>
+                Fill in the information below and sign in!
+                <br/>
+                <br/>
             <form onSubmit={this.ToServer_Login}>
 
-                <input placeholder=" Email" name="email" value={this.state.email} onChange={this.OnChange}/>*<br />
-                <input placeholder=" Password" name="password" value={this.state.password} onChange={this.OnChange}/>*<br />
+                <input className="textInput" placeholder=" Email" name="email" value={this.state.email} onChange={this.OnChange}/><br />
+                <input className="textInput" type="password" placeholder=" Password" name="password" value={this.state.password} onChange={this.OnChange}/><br />
                 
-                <Link to='/register'>Register page</Link>
-                <button type="submit">Login!</button>
+                <div style={{justifyContent: "space-between", display: "flex", width: 200}}>
+                    <div><Link className="btn blue" to='/register'>Register page</Link></div>
+                    <div><button className="btn green" type="submit">Login!</button></div>
+                </div>
+                
             </form>
             
         </div>

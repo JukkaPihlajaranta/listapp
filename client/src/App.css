@@ -1,12 +1,23 @@
 :root{
-  
-  
+  --font-button: 'Baloo 2', cursive;
+  --font-topic: 'Changa One', cursive;;
+  --font-body: 'Quattrocento Sans', sans-serif;
+
 }
 
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body{
+  font-family: var(--font-body);
+}
+
+h1,h2,h3{
+  font-family: var(--font-topic);
+
 }
 .container{
   width: 350px;
@@ -19,49 +30,133 @@
   margin-right: 5px;
 }
 
+/* INPUTS */
+.textInput{
+  background: white;
+  font-family: var(--font-button);
+  outline: none;
+  border: 1px solid rgb(192, 192, 192);
+  border-radius: 3px;
+  
+  height: 27px;
+  margin-bottom: 2px;
+  width: 200px;
+  margin-right: 5px;
+}
+
+.checkbox{
+  vertical-align: middle;
+  margin-top: 5px;
+}
 
 /*BUTTONS*/
-a,
-button{
+.btn{
+  text-decoration: none;
   border: none;
-  padding: 5px 8px;
+  padding: 2px 5px;
   outline: none;
   border-radius: 5px;
+  font-family: var(--font-button);
+  background: none;
+  font-size: 16px;
+  text-shadow: 1px 1px 1px dimgray;
 }
 
-.btn.green{
-  background: lime;
-  color:black
-}
-
+.btn.green{ color:rgb(7, 199, 0); }
 .btn.green:hover{
-  background: green;
+  background: rgb(7, 199, 0);
   color:white
 }
 
-/* input{
-  background: white;
-  outline: none;
-  border: 1px solid lightblue ;
-  height: 25px;
-} */
-
-.navbar{
-  padding: 10px 5px;
-  background: linear-gradient(to bottom, rgb(135, 171, 192), white);
-  display: flex;
+.btn.blue{ color:rgb(112, 191, 255); }
+.btn.blue:hover{
+  background: rgb(112, 191, 255);
+  color:white
 }
+
+.btn.orange{ color:orange; }
+.btn.orange:hover{
+  background: orange;
+  color:white
+}
+
+.btn.red{ color:salmon;}
+.btn.red:hover{
+  background: salmon;
+  color:white
+}
+
+/*ONE ROWS*/
 
 .firstRow{
   display: flex;
   justify-content: space-between;
-}
-
-.shoplistWrapper{
-  
-  background: linear-gradient(white 0%, rgb(135, 171, 192) 30%,  rgb(135, 171, 192) 60%, white);
+  line-height: 25px;
 }
 
 .oneItemRow{
   margin-left: 25px;
+  display: flex;
+  line-height: 25px;
+}
+
+
+
+/* WRAPPERS && BARS */
+.navbar{
+  padding: 10px 5px;
+  background: linear-gradient(to bottom, rgb(135, 171, 192), white);
+  display: flex;
+  justify-content: space-between;
+}
+
+.editMenuPanel{
+  padding-top:5px;
+  padding-left: 5px;
+  padding-bottom: 20px;
+  background: linear-gradient(to bottom, rgb(255, 200, 200), white);
+  border-radius: 10px 50px 10px 10px;
+}
+
+.editAddPanel{
+  padding-top: 10px;
+  padding-bottom:5px;
+  padding-left: 5px;
+  background: linear-gradient(to top, rgb(190, 255, 174), white);
+  border-radius: 10px 10px 50px 10px;
+}
+
+.allShoplistWrapper{
+  
+  background: linear-gradient(white 0%, rgb(217, 241, 255) 20%,  rgb(217, 241, 255) 80%, white);
+  border-radius: 10px ;
+}
+
+.editShoplistWrapper{
+  
+  background: linear-gradient(white 0%, rgb(217, 241, 255) 20%,  rgb(217, 241, 255) 80%, white);
+  border-radius: 10px ;
+}
+
+
+/*INDIVIDUAL TEXTS ETC.*/
+
+.errorMsg{
+  color: red;
+  font-size: 14px;
+}
+
+.puchasedItem{
+  color: green;
+  margin-left: 15px;
+  text-decoration: line-through;
+  font-family: var(--font-button);
+  /* vertical-align: middle; */
+}
+
+.non_puchasedItem{
+  color: salmon;
+  margin-left: 10px;
+  font-family: var(--font-button);
+  /* vertical-align: middle; */
 }
