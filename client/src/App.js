@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import UserContext from './components/tools/Context';
 import CustomRoute from './components/tools/Route_Custom';
 import AdminRoute from './components/tools/Route_Admin';
@@ -47,7 +47,7 @@ export default function App() {
         {headers: {'x-auth-token': token}}
         );
       
-        console.log(userRes);
+        // console.log(userRes);
 
         setUserData({
           token,
@@ -69,15 +69,16 @@ export default function App() {
       <div className="subContainer">
       <Switch>
 
-          <Route path='/login' component={LoginPage} />
+          <Route exact path='/' component={LoginPage} />
           <Route path='/register' component={RegisterPage} />
 
-          <Route exact path='/' component={HomePage} />
+          <Route path='/home' component={HomePage} />
           <CustomRoute path='/lists' component={ShoppingLists} />
           <CustomRoute path='/edit/:id' component={EditShoppingList} />
 
           <AdminRoute path='/adminpage' component={AdminPage} />
-
+          <Route path='*' component={LoginPage} />
+          {/* <Redirect path='*' /> */}
         
       </Switch>
       </div>

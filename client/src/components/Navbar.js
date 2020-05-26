@@ -26,7 +26,7 @@ export default class Navbar extends React.Component {
 
         localStorage.removeItem('auth-token');
         // this.props.history.push('/login');
-        window.location = '/login'
+        window.location = '/'
     }
 
 
@@ -34,19 +34,25 @@ export default class Navbar extends React.Component {
     render(){
         return <div className="navbar">
             
-                    <div>
-                    listApp
+                    <div style={{display: "inline-block", }}>
+                        <img src="./ListApp_Img.png" alt="LISTAPP" height="35px"/>
+                    
                     {this.context.userData.user !== undefined &&
-                    <>
-                        <Link className="btn blue" to='/'>Home</Link>
-                        <Link className="btn blue" to='/lists'>Lists</Link>
-                        <Link className="btn orange" to='/adminpage'>Admin</Link>
-                    </>
+                        <>
+                            <Link className="btn blue" to='/home'>Home</Link>
+                            <Link className="btn blue" to='/lists'>Lists</Link>
+                            {this.context.userData.drog &&
+                            <Link className="btn orange" to='/adminpage'>Admin</Link>
+                            }
+                            
+                        </>
                     }
                     
                     </div>
-                    {this.context.userData.user !== undefined &&
-                    <button className="btn red" onClick={() => this.Logout()}>Logout</button>
+                    {this.context.userData.user !== undefined  &&
+                    <span style={{marginTop: 8}}>
+                        <button className="btn red" onClick={() => this.Logout()}>Logout</button>
+                    </span>
                     }
                 </div>
     }

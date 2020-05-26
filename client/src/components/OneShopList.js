@@ -162,7 +162,7 @@ export default class OneShopList extends React.Component {
                 </div>
 
                 {this.state.showList &&
-                <div className="allShoplistWrapper">
+                <div className="mainShoplistWrapper">
                 {this.state.itemList.map((item, index) => (
 
                     <div className="oneItemRow" key={index}> 

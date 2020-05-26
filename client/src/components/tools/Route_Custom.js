@@ -15,7 +15,7 @@ const CustomRoute = ({ component: Component, ...rest }) => {
             
             : 
             
-            <Redirect to='/login' />
+            <Redirect to='/' />
             )} />
 
             )    

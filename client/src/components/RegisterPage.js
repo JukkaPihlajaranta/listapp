@@ -77,7 +77,7 @@ export default class RegisterPage extends React.Component {
     render(){
         return <div>
             Please fill in the information below and register. <br/>* fields are mandatory.<br/><br/>
-            <div>{this.state.errorMsg !== '' && this.state.errorMsg}</div>
+            <div  className="errorMsg">{this.state.errorMsg !== '' && this.state.errorMsg}</div>
             <form onSubmit={this.ToServer_Register}>
                 <input className="textInput" placeholder=" Name" name="name" value={this.state.name} onChange={this.OnChange}/><br />
                 <input className="textInput" required placeholder=" Email" type="email" name="email" value={this.state.email} onChange={this.OnChange}/>
@@ -90,7 +90,7 @@ export default class RegisterPage extends React.Component {
                 <span className="errorMsg">*</span><br />
                 
                 <div style={{justifyContent: "space-between", display: "flex", width: 200}}>
-                    <div><Link className="btn blue" to='/login'>Login page</Link></div> 
+                    <div><Link className="btn blue" to='/'>Login page</Link></div> 
                     <div><button className="btn green" type="submit">Submit!</button></div>
                 </div>
             </form>

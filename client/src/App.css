@@ -15,9 +15,10 @@ body{
   font-family: var(--font-body);
 }
 
-h1,h2,h3{
+h1,h2,h3, h4{
   font-family: var(--font-topic);
-
+  color:rgb(112, 191, 255);
+  text-shadow: 1px 1px 1px rgb(0, 0, 0);
 }
 .container{
   width: 350px;
@@ -59,7 +60,8 @@ h1,h2,h3{
   font-family: var(--font-button);
   background: none;
   font-size: 16px;
-  text-shadow: 1px 1px 1px dimgray;
+  text-shadow: 1px 1px 1px rgb(31, 31, 31);
+  vertical-align: middle;
 }
 
 .btn.green{ color:rgb(7, 199, 0); }
@@ -104,10 +106,12 @@ h1,h2,h3{
 
 /* WRAPPERS && BARS */
 .navbar{
-  padding: 10px 5px;
-  background: linear-gradient(to bottom, rgb(135, 171, 192), white);
+  padding: 5px 5px;
+  background: linear-gradient(to bottom, rgb(180, 228, 255), white);
   display: flex;
   justify-content: space-between;
+  /* line-height: auto; */
+  
 }
 
 .editMenuPanel{
@@ -126,9 +130,9 @@ h1,h2,h3{
   border-radius: 10px 10px 50px 10px;
 }
 
-.allShoplistWrapper{
+.mainShoplistWrapper{
   
-  background: linear-gradient(white 0%, rgb(217, 241, 255) 20%,  rgb(217, 241, 255) 80%, white);
+  background: linear-gradient(to right, rgb(203, 237, 255), white);
   border-radius: 10px ;
 }
 

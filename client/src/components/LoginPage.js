@@ -52,15 +52,17 @@ export default class LoginPage extends React.Component {
                 password:'',
                 errorMsg:''
             },() => {
-                window.location = '/'; //gives the token and user name etc.
+                window.location = '/home'; //gives the token and user name etc.
                 // this.props.history.push('/');
             });
         })
         .catch(err => {
+            
+            
             this.setState({
-                errorMsg: err.data
+                errorMsg: err.response.data.msg
             })
-            console.log(err);
+            
         })
     };
 
@@ -75,10 +77,11 @@ export default class LoginPage extends React.Component {
                 Fill in the information below and sign in!
                 <br/>
                 <br/>
+                <div className="errorMsg">{this.state.errorMsg !== '' && this.state.errorMsg}</div>
             <form onSubmit={this.ToServer_Login}>
 
-                <input className="textInput" placeholder=" Email" name="email" value={this.state.email} onChange={this.OnChange}/><br />
-                <input className="textInput" type="password" placeholder=" Password" name="password" value={this.state.password} onChange={this.OnChange}/><br />
+                <input required className="textInput" placeholder=" Email" name="email" value={this.state.email} onChange={this.OnChange}/><br />
+                <input required className="textInput" type="password" placeholder=" Password" name="password" value={this.state.password} onChange={this.OnChange}/><br />
                 
                 <div style={{justifyContent: "space-between", display: "flex", width: 200}}>
                     <div><Link className="btn blue" to='/register'>Register page</Link></div>

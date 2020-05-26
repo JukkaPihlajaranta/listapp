@@ -238,7 +238,15 @@ export default class EditShoppingList extends React.Component {
 
     DisplayShopList(list){
 
-        if (list.length === 0) return <div>You don't have any lists</div>
+        if (list.length === 0) return (<div>
+            <br/>
+            <br/>
+            <div className="errorMsg">You don't have any lists</div>
+            <br/>
+            <br/>
+        </div>
+        
+        )
 
         return list.map((list, index) => 
         <div style={{marginLeft: 20}} key={index}>
@@ -256,8 +264,8 @@ export default class EditShoppingList extends React.Component {
 
     render(){
         return <>
-                <div>Edit - {this.state.shoplistName} ({this.state.listItems.length})
-                <button className="btn orange" onClick={() => this.ShowHideMenu()}> {this.state.openHideEditPanel ? "<" : ">"} </button>
+                <div className="">Edit - {this.state.shoplistName} ({this.state.listItems.length}) 
+                <button className="btn orange" onClick={() => this.ShowHideMenu()}> {this.state.openHideEditPanel ? " < " : " > "} </button>
                 
                 
                 </div>
