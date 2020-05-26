@@ -11,6 +11,7 @@ router.post('/register', async (req, res) => {
     try{
         let { email, password, passwordCheck, displayName } = req.body;
 
+        console.log(req.body);
         //validate
 
         if (!email || !password || !passwordCheck) return res.status(400).json({ msg: "Not all field filled in."})
@@ -92,6 +93,21 @@ router.post('/login', async (req, res) => {
     }
 });
 
+router.get('/access_admin/:id', async (req,res) =>{
+
+    
+    try{
+        const targetUser = await User.findById(req.paramas.id);
+                
+        if (!targetUser.admin) return res.json(false);
+        
+        res.json(true);
+    }
+    catch(err){
+        res.status(500).json({error: err.message});
+    }
+
+});
 
 
 //admin

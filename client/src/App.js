@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import UserContext from './components/tools/Context';
 import CustomRoute from './components/tools/Route_Custom';
 import AdminRoute from './components/tools/Route_Admin';
@@ -78,7 +78,7 @@ export default function App() {
 
           <AdminRoute path='/adminpage' component={AdminPage} />
           <Route path='*' component={LoginPage} />
-          {/* <Redirect path='*' /> */}
+          
         
       </Switch>
       </div>

@@ -40,8 +40,10 @@ export default class RegisterPage extends React.Component {
             displayName: this.state.name,
             email: this.state.email,
             password: this.state.password,
-            password2: this.state.password2,
+            passwordCheck: this.state.password2,
         }
+
+        console.log(payload);
 
         axios({
             url: '/register',
@@ -66,7 +68,7 @@ export default class RegisterPage extends React.Component {
         })
         .catch(err => {
             this.setState({
-                errorMsg: err.data.msg
+                errorMsg: err.response.data.msg
             })
             console.log(err);
         })
