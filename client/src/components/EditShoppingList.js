@@ -17,6 +17,7 @@ export default class EditShoppingList extends React.Component {
         this.ToServer_AddNewItem = this.ToServer_AddNewItem.bind(this);
         this.ToServer_DeleteWholeList = this.ToServer_DeleteWholeList.bind(this);
         this.ToServer_GetList = this.ToServer_GetList.bind(this);
+        // this.ToServer_ShareThisList = this.ToServer_ShareThisList.bind(this);
 
         this.OnChange = this.OnChange.bind(this);
         this.ShowHideMenu = this.ShowHideMenu.bind(this);
@@ -25,16 +26,20 @@ export default class EditShoppingList extends React.Component {
             listItems: [],
             shoplistName: '',
             shoplistId: this.props.match.params,
+            listSharedWith: [],
+            
 
             newName: '',
             addItem: '',
             deleteListName: '',
             openHideEditPanel: false,
+            userEmailToShareWith: '',
 
             errorMsgGeneral: '',
             errorMsgUpdateListName: '',
             errorMsgNewItem: '',
             errorMsgDeleteShopList: '',
+            errorMsgSharingTheList: '',
             
         }
 
@@ -74,13 +79,16 @@ export default class EditShoppingList extends React.Component {
             
             this.setState({
                 shoplistName: res.data.listName,
-                listItems: res.data.shopItemList
+                listItems: res.data.shopItemList,
+                listSharedWith: res.data.listSharedWith
             })
         })
         .catch(err => {
 
             console.log(err);
-        })
+        });
+
+
     };
 
     ToServer_UpdateShopListName(){
@@ -111,6 +119,7 @@ export default class EditShoppingList extends React.Component {
                     errorMsgDeleteShopList: '',
                     errorMsgNewItem: '',
                     errorMsgUpdateListName: '',
+                    errorMsgSharingTheList: ''
                 })
             })
             .catch(err => {
@@ -196,6 +205,7 @@ export default class EditShoppingList extends React.Component {
                 errorMsgDeleteShopList: '',
                 errorMsgNewItem: '',
                 errorMsgUpdateListName: '',
+                errorMsgSharingTheList: ''
             });
 
         })
@@ -219,7 +229,7 @@ export default class EditShoppingList extends React.Component {
                 data: payload
             })
             .then(() => {
-                this.props.history.push('/lists')            
+                this.props.history.push('/lists');         
     
             })
             .catch(err => {
@@ -236,6 +246,122 @@ export default class EditShoppingList extends React.Component {
 
     };
 
+    ToServer_ShareThisList(){
+
+        if (this.state.userEmailToShareWith === this.context.userData.user.email){
+            
+            this.setState({
+                errorMsgSharingTheList: "You cannot share your own list with yourself!"
+            });
+            return
+        }
+
+        if (this.state.userEmailToShareWith === ''){
+            this.setState({
+                errorMsgSharingTheList: "Please type in an email!"
+            });
+            return
+        }
+
+        for (var i = 0; i < this.state.listSharedWith.length; i++){
+            if (this.state.listSharedWith[i].userEmail === this.state.userEmailToShareWith){
+                this.setState({
+                    errorMsgSharingTheList: "This list has been already share with that user!"
+                });
+                return
+            }
+        }
+
+        const payload = {
+            userEmail: this.state.userEmailToShareWith,
+            listId: this.state.shoplistId.id
+        }
+
+        console.log(payload);
+
+        axios({
+            url: `/api/sharelist`,
+            method: 'PUT',
+            data: payload
+        })
+        .then((res) => {
+            
+            this.setState({
+                listSharedWith: res.data.listSharedWith,
+
+                errorMsgGeneral: '',
+                errorMsgDeleteShopList: '',
+                errorMsgNewItem: '',
+                errorMsgUpdateListName: '',
+                errorMsgSharingTheList: ''
+            }, () => {
+
+                // this.ShowSharedListInfo();
+            });
+
+        })
+        .catch(err => {
+            console.log(err.response);
+            this.setState({
+                errorMsgSharingTheList: err.response.data.error
+            })
+        })
+    }
+
+    ToServer_UnShareThisList(removeEmail){
+
+        const tempList = [...this.state.listSharedWith]
+        let tempUserId;
+
+        for (var i = 0; i < tempList.length; i++){
+            if (tempList[i].userEmail === removeEmail){
+                tempUserId = tempList[i].userId;
+                tempList.splice(i, 1);
+                break;
+            }
+        }
+
+        this.setState({
+            listSharedWith: tempList
+        });
+
+        const payload = {
+            userId: tempUserId,
+            userEmail: removeEmail,
+            listId: this.state.shoplistId.id
+        }
+
+        console.log(payload);
+
+        // axios({
+        //     url: `/api/sharelist`,
+        //     method: 'PUT',
+        //     data: payload
+        // })
+        // .then((res) => {
+            
+        //     this.setState({
+        //         listSharedWith: res.data.listSharedWith,
+
+        //         errorMsgGeneral: '',
+        //         errorMsgDeleteShopList: '',
+        //         errorMsgNewItem: '',
+        //         errorMsgUpdateListName: '',
+        //         errorMsgSharingTheList: ''
+        //     }, () => {
+
+        //         // this.ShowSharedListInfo();
+        //     });
+
+        // })
+        // .catch(err => {
+        //     console.log(err.response);
+        //     this.setState({
+        //         errorMsgSharingTheList: err.response.data.error
+        //     })
+        // })
+    }
+
     DisplayShopList(list){
 
         if (list.length === 0) return (<div>
@@ -251,15 +377,31 @@ export default class EditShoppingList extends React.Component {
         return list.map((list, index) => 
         <div style={{marginLeft: 20}} key={index}>
             
-
+            
             <button className="btn red" onClick={() => this.ToServer_DeleteItem(list._id)} >Delete</button>
             <span style={{marginLeft: 5, color: "dimgray"}}>{list.itemName}</span> 
             
         </div>
         
         )
-
     };
+
+
+    //SHOW SHARED LISTS
+    ShowSharedListInfo(list){
+        if (list.length === 0) return <div>You haven't shared this list with anyone.</div>
+
+        return list.map((list, index) => 
+            <div style={{marginLeft: 20}} key={index}>
+            
+                <button className="btn red" onClick={() => this.ToServer_UnShareThisList(list.userEmail)}>Unshare</button>
+                <span style={{marginLeft: 5, color: "dimgray"}}>Shared with <span style={{color: "black", fontWeight:"bold"}}>{list.userEmail}</span></span> 
+        
+            </div>
+
+        
+        )
+    }
 
 
     render(){
@@ -274,11 +416,16 @@ export default class EditShoppingList extends React.Component {
                 <div className="editMenuPanel">
                     {this.state.errorMsgUpdateListName !== '' &&  <span className="errorMsg">{this.state.errorMsgUpdateListName}</span> }
                     <input className="textInput" placeholder=" New list name" name="newName" value={this.state.newName} onChange={this.OnChange} />
-                    <button className="btn orange" onClick={() => this.ToServer_UpdateShopListName()}>Change</button> <br/>
-
-                    {this.state.errorMsgDeleteShopList !== '' &&  <span className="errorMsg">{this.state.errorMsgDeleteShopList}</span> }
+                    <button className="btn orange" onClick={() => this.ToServer_UpdateShopListName()}>Change</button> 
+                    <br/>
+                    {this.state.errorMsgDeleteShopList !== '' &&  <span className="errorMsg">{this.state.errorMsgDeleteShopList}<br/></span> }
                     <input className="textInput" placeholder=" Type the list name here" name="deleteListName" value={this.state.deleteListName} onChange={this.OnChange} />
                     <button className="btn red" onClick={() => this.ToServer_DeleteWholeList()}>Delete this list</button>
+                    <br/>
+                    {this.state.errorMsgSharingTheList !== '' &&  <span className="errorMsg">{this.state.errorMsgSharingTheList}<br/></span> }
+                    <input className="textInput" placeholder=" User to share with" name="userEmailToShareWith" value={this.state.userEmailToShareWith} onChange={this.OnChange} />
+                    <button className="btn green" onClick={() => this.ToServer_ShareThisList()}>Share this list</button>
+                    {this.ShowSharedListInfo(this.state.listSharedWith)}
                 </div>
                 }
 

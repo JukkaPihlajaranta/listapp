@@ -6,13 +6,13 @@ export default class HomePage extends React.Component {
 
     static contextType = UserContext;
 
-    constructor (props){
-        super(props);
+    // constructor (props){
+    //     super(props);
 
-        this.state={
-            userName: null
-        }
-    }
+    //     this.state={
+    //         userName: null
+    //     }
+    // }
 
     
     render(){

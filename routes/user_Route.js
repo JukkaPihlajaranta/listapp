@@ -93,7 +93,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.get('/access_admin/:id', async (req,res) =>{
+router.get('/access_admin/:id', async (req,res) =>{ ////////not ready??
 
     
     try{
@@ -197,6 +197,7 @@ router.get('/users', auth, async (req, res) => {
     res.json({
         displayName: user.displayName,
         id: user._id,
+        email: user.email,
         admin: user.admin
     });
 })

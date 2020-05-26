@@ -41,6 +41,10 @@ export default class Navbar extends React.Component {
                         <>
                             <Link className="btn blue" to='/home'>Home</Link>
                             <Link className="btn blue" to='/lists'>Lists</Link>
+                            {/* {this.context.userData.user.sharedLists.length > 0 &&
+                            <Link className="btn blue" to='/sharedLists'>Shared</Link>
+                            } */}
+                            
                             {this.context.userData.drog &&
                             <Link className="btn orange" to='/adminpage'>Admin</Link>
                             }

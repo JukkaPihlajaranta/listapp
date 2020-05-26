@@ -7,7 +7,9 @@ const User = new Schema({
     password: {type: String},
     admin: {type: Boolean, default: false},
     lastLoggedIn: {type: String},
-    
+    sharedLists: [
+        { listId: String,
+        }]
 });
 
 module.exports = mongoose.model('user', User);

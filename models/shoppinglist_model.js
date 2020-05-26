@@ -13,6 +13,10 @@ const ShoppingList = new Schema({
         checked: {
             type: Boolean, 
             default: false}
+    }],
+    listSharedWith:[{
+        userEmail: String,
+        userId: String
     }]
 
 });

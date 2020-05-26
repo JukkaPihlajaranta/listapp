@@ -1,7 +1,7 @@
 const router = require('express').Router();
 // const auth = require('../middleware/auth');
 const ShoppingList = require('../models/shoppinglist_model');
-
+const User = require('../models/user_model');
 
 
 
@@ -92,6 +92,40 @@ router.put('/changeShoplistName',  (req, res) => {
 
 
 
+//SHARE LIST FUNCTIONS
+router.put('/sharelist', async (req,res) =>{
+
+    
+    const userEmail = req.body.userEmail;
+    const listId = req.body.listId;
+    
+    
+    try{
+        const targetUser = await User.findOne({email: userEmail});
+        if (!targetUser) return res.status(500).json({ msg: "No user with that email."});
+        
+        const shoppingList = await ShoppingList.findById(listId)
+        shoppingList.listSharedWith.push({ userEmail: userEmail, userId: targetUser._id });
+        
+        targetUser.sharedLists.push({listId: listId})
+
+        shoppingList.save();
+        targetUser.save();
+        
+        const payload = {
+            listSharedWith: shoppingList.listSharedWith,
+        }
+        
+
+        res.json(payload);
+    }
+    catch(err){
+        res.status(500).json({error: err.message});
+    }
+
+});
+
+
 
 //CHANGE CHECKMARKS FUNCTIONS
 
@@ -140,7 +174,7 @@ router.put('/modifyItemCheckMark', (req, res) => {
 });
 
 //UnCheck all checkmarks
-router.put('/uncheckall', async (req, res) => {
+router.put('/uncheckall', (req, res) => {
     
     const targetList = req.body.targetList;
     

@@ -1,11 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-
+import UserContext from './tools/Context';
 import {Link} from "react-router-dom";
 
 export default class LoginPage extends React.Component {
 
-    
+    static contextType = UserContext;
 
     constructor (props){
         super(props);
@@ -27,6 +27,9 @@ export default class LoginPage extends React.Component {
         });
     };
 
+
+
+
     ToServer_Login(e){
         e.preventDefault();
 
@@ -41,8 +44,8 @@ export default class LoginPage extends React.Component {
             data: payload
         })
         .then(res => {
-            console.log(res);
-            console.log(res.data.token);
+            // console.log(res);
+            // console.log(res.data.token);
             
             localStorage.setItem('auth-token', res.data.token);
             
@@ -67,11 +70,12 @@ export default class LoginPage extends React.Component {
     };
 
     MoveToHomePage(){
-
+        window.location = '/home';
     }
 
     render(){
-        return <div>
+        if (this.context.userData.user === undefined){
+            return <div>
 
                 <br/>
                 Fill in the information below and sign in!
@@ -89,8 +93,10 @@ export default class LoginPage extends React.Component {
                 </div>
                 
             </form>
-            
         </div>
+        }
+
+        this.MoveToHomePage()
     }
 
 }
