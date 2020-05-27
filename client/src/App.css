@@ -2,7 +2,7 @@
   --font-button: 'Baloo 2', cursive;
   --font-topic: 'Changa One', cursive;;
   --font-body: 'Quattrocento Sans', sans-serif;
-
+  --font-listTopic: 'Viga', sans-serif;
 }
 
 *{
@@ -59,9 +59,11 @@ h1,h2,h3, h4{
   border-radius: 5px;
   font-family: var(--font-button);
   background: none;
-  font-size: 16px;
+  font-size: 17px;
   text-shadow: 1px 1px 1px rgb(31, 31, 31);
-  vertical-align: middle;
+  cursor: pointer;
+  /* vertical-align: middle; */
+  
 }
 
 .btn.green{ color:rgb(7, 199, 0); }
@@ -102,15 +104,26 @@ h1,h2,h3, h4{
   line-height: 25px;
 }
 
+.sharedListRow{
+  margin-left: 0px;
+  display: inline-block;
 
+}
+
+.middle{
+  vertical-align: middle;
+  
+}
 
 /* WRAPPERS && BARS */
 .navbar{
   padding: 5px 5px;
   background: linear-gradient(to bottom, rgb(180, 228, 255), white);
   display: flex;
+  /* display: inline-flex; */
   justify-content: space-between;
-  /* line-height: auto; */
+  line-height: 40px;
+  /* vertical-align: middle; */
   
 }
 
@@ -134,6 +147,13 @@ h1,h2,h3, h4{
   
   background: linear-gradient(to right, rgb(203, 237, 255), white);
   border-radius: 10px ;
+}
+
+.sharedlistWrapper{
+  
+  background: linear-gradient(to right, rgb(255, 239, 203), white);
+  border-radius: 10px ;
+  font-family: var(--font-button);
 }
 
 .editShoplistWrapper{
@@ -163,4 +183,12 @@ h1,h2,h3, h4{
   margin-left: 10px;
   font-family: var(--font-button);
   /* vertical-align: middle; */
+}
+
+.listTopic{
+  font-family: var(--font-button);
+  color:rgb(112, 191, 255);
+  text-shadow: 1px 1px 1px rgb(0, 0, 0);
+  font-size: 18px;
+  
 }

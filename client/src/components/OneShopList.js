@@ -15,8 +15,11 @@ export default class OneShopList extends React.Component {
         this.ToServer_ShowHideList = this.ToServer_ShowHideList.bind(this);
 
         this.state = {
+            //lists
             itemList: this.props.value.shopItemList,
-            
+            listSharedWith: this.props.value.listSharedWith,
+
+            //other
             listName: this.props.value.listName,
             listId: this.props.value._id,
             readyItems: this.props.value.readyItemsCount,
@@ -150,10 +153,16 @@ export default class OneShopList extends React.Component {
             <div>
                 
                 <div className="firstRow">
-                    <div><input type="checkbox" checked={this.state.showList} onChange={this.ToServer_ShowHideList} /> {this.truncate(this.state.listName, 14)} ({this.state.readyItems}/{this.state.itemCount})</div>
+                    <div style={{verticalAlign: "middle"}}>
+                        <input style={{marginRight: 5}} type="checkbox" checked={this.state.showList} onChange={this.ToServer_ShowHideList} /> 
+                        <span className="listTopic">{this.truncate(this.state.listName, 14)}</span> ({this.state.readyItems}/{this.state.itemCount})
+                    </div>
                     
                     {this.state.showList &&
                         <div>
+                            {this.state.listSharedWith !== undefined &&
+                                this.state.listSharedWith.length > 0 &&
+                            <img className="middle" src="./sharedList.png" alt="Shared" height="15px"/>}
                             <button className="btn green" onClick={this.ToServer_ResetCheckBoxes}>Reset</button>
                             <Link className="btn green" to={`/edit/${this.state.listId}`} style={{marginLeft: 5}}>Edit</Link>
                         </div>

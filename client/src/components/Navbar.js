@@ -34,29 +34,30 @@ export default class Navbar extends React.Component {
     render(){
         return <div className="navbar">
             
-                    <div style={{display: "inline-block", }}>
-                        <img src="./ListApp_Img.png" alt="LISTAPP" height="35px"/>
+                    <div style={{display: "flex" }}>
+                        <img src="./ListApp_Img_new.png" alt="LISTAPP" height="34px"/>
                     
                     {this.context.userData.user !== undefined &&
-                        <>
+                        <span style={{verticalAlign: "middle"}}>
                             <Link className="btn blue" to='/home'>Home</Link>
                             <Link className="btn blue" to='/lists'>Lists</Link>
-                            {/* {this.context.userData.user.sharedLists.length > 0 &&
-                            <Link className="btn blue" to='/sharedLists'>Shared</Link>
-                            } */}
+                            {this.context.userData.user.sharedLists !== undefined &&
+                            this.context.userData.user.sharedLists.length > 0 &&
+                            <Link className="btn blue" to='/sharedList'>Shared</Link>
+                            }
                             
                             {this.context.userData.drog &&
                             <Link className="btn orange" to='/adminpage'>Admin</Link>
                             }
                             
-                        </>
+                        </span>
                     }
                     
                     </div>
                     {this.context.userData.user !== undefined  &&
-                    <span style={{marginTop: 8}}>
+                    <div style={{verticalAlign: "middle"}}>
                         <button className="btn red" onClick={() => this.Logout()}>Logout</button>
-                    </span>
+                    </div>
                     }
                 </div>
     }

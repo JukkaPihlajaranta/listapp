@@ -109,7 +109,9 @@ export default class ShoppingLists extends React.Component {
         if (list.length === 0) return <div>You don't have any lists</div>
 
         return list.map((list, index) => 
-        <div key={index}><OneShopList value={list} /></div>
+        <div key={index}><OneShopList value={list} />
+        
+        </div>
         
         )
 

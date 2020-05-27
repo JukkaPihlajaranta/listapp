@@ -14,7 +14,8 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
 import ShoppingLists from './components/ShoppingLists';
-import EditShoppingList from './components/EditShoppingList'
+import EditShoppingList from './components/EditShoppingList';
+import SharedShoppingLists from './components/SharedShoppingLists';
 
 
 
@@ -75,6 +76,7 @@ export default function App() {
           <Route path='/home' component={HomePage} />
           <CustomRoute path='/lists' component={ShoppingLists} />
           <CustomRoute path='/edit/:id' component={EditShoppingList} />
+          <CustomRoute path='/sharedList' component={SharedShoppingLists} />
 
           <AdminRoute path='/adminpage' component={AdminPage} />
           <Route path='*' component={LoginPage} />

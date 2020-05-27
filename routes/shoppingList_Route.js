@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const mongoose = require('mongoose');
 // const auth = require('../middleware/auth');
 const ShoppingList = require('../models/shoppinglist_model');
 const User = require('../models/user_model');
@@ -125,6 +126,89 @@ router.put('/sharelist', async (req,res) =>{
 
 });
 
+
+router.put('/desharelist', async (req,res) =>{
+
+    
+    const receivedUserEmail = req.body.userEmail;
+    const listId = req.body.listId;
+    
+    console.log("yep");
+    
+    try{
+        const targetUser = await User.findOne({email: receivedUserEmail});
+        //if user has been deleted from database
+        if (!targetUser) return res.status(500).json({ msg: "No user with that email."}); 
+        
+        console.log("deleted user shared", targetUser.email);
+
+        const shoppingList = await ShoppingList.findById(listId)
+        for (var i = 0; i < shoppingList.listSharedWith.length; i++){
+            if (shoppingList.listSharedWith[i].userEmail == receivedUserEmail){
+                shoppingList.listSharedWith.splice(i, 1);
+                break;
+            }
+        }
+        
+        for (var i = 0; i < targetUser.sharedLists.length; i++){
+            if (targetUser.sharedLists[i].listId == listId){
+                console.log(listId, " found! ")
+                targetUser.sharedLists.splice(i, 1);
+                break;
+            }
+        }
+        
+
+
+        
+
+        shoppingList.save();
+        targetUser.save();
+        
+       
+
+        res.json('Updated');
+    }
+    catch(err){
+        res.status(500).json({error: err.message});
+    }
+
+});
+
+router.get('/sharedLists/:id', async (req, res) => {
+
+    const userId = req.params.id;
+    
+    try{
+        const user = await User.findById(userId);
+        // console.log('userlists: ', user.sharedLists);
+
+        let tempList = [];
+
+        user.sharedLists.forEach(el => {
+            tempList.push(el.listId);
+        });
+
+        
+        // let objIdArray = tempList.map(s => mongoose.Types.ObjectId(s));
+        // const temp = [
+        //     mongoose.Types.ObjectId("5ecd653b2847f712c01a2f0f"), 
+        //     mongoose.Types.ObjectId("5ece509ea4e6e82d649dce53")];
+        // console.log("´temp: ", temp);
+        const lists = await ShoppingList.find({_id: tempList});
+        
+        const payload = {
+            sharedLists: lists
+        }
+
+        res.json(payload);
+    }
+    catch(err){
+        res.status(500).json({error: err.message});
+    }
+    
+
+});
 
 
 //CHANGE CHECKMARKS FUNCTIONS

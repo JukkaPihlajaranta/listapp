@@ -19,25 +19,25 @@ export default class HomePage extends React.Component {
         
         if (this.context.userData.user !== undefined){
             return <div><br/>
-            Welcome {this.context.userData.user.displayName}!
+            Welcome <span className="listTopic" style={{color: "limegreen"}}>{this.context.userData.user.displayName}</span>!
             <br/>
             <br/>
             <br/>
 
-            <h3>Update 25.5.2020</h3>
+            <div className="listTopic">Update 25.5.2020</div>
             <li>Finalizing the new application.</li>
             <br/>
 
-            <h3>Update 16.5.2020</h3>
+            <div className="listTopic">Update 16.5.2020</div>
             <li>Platform changed from plain Nodejs/ejs to React.</li>
             <br/>
 
-            <h3>Update 18.3.2020</h3>
+            <div className="listTopic">Update 18.3.2020</div>
             <li>Register and login system added.</li>
             <li>Users are able to add their own shoppinglist to their account and manage them.</li>
             <br/>
 
-            <h3>Update 12.1.2020</h3>
+            <div className="listTopic">Update 12.1.2020</div>
             <li>Shopping list app created and some features added.</li>
 
             </div>

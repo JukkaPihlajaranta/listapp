@@ -217,6 +217,15 @@ export default class EditShoppingList extends React.Component {
 
     ToServer_DeleteWholeList(){
         
+        if (this.state.listSharedWith.length > 0)
+        {
+            this.setState({
+                errorMsgDeleteShopList: "Unshare this list before deleting it."
+            });
+            return
+        }
+
+
         if (this.state.shoplistName === this.state.deleteListName){
 
             const payload = {
@@ -240,7 +249,7 @@ export default class EditShoppingList extends React.Component {
         else{
             this.setState({
                 errorMsgDeleteShopList: "The name does't match with the current shoplist name."
-            })
+            });
         }
 
 
@@ -303,11 +312,13 @@ export default class EditShoppingList extends React.Component {
         .catch(err => {
             console.log(err.response);
             this.setState({
-                errorMsgSharingTheList: err.response.data.error
+                errorMsgSharingTheList: err.response.data.msg
             })
         })
     }
 
+
+    //Unshare a list
     ToServer_UnShareThisList(removeEmail){
 
         const tempList = [...this.state.listSharedWith]
@@ -333,33 +344,31 @@ export default class EditShoppingList extends React.Component {
 
         console.log(payload);
 
-        // axios({
-        //     url: `/api/sharelist`,
-        //     method: 'PUT',
-        //     data: payload
-        // })
-        // .then((res) => {
+        axios({
+            url: `/api/desharelist`,
+            method: 'PUT',
+            data: payload
+        })
+        .then(() => {
             
-        //     this.setState({
-        //         listSharedWith: res.data.listSharedWith,
+            this.setState({
+                errorMsgGeneral: '',
+                errorMsgDeleteShopList: '',
+                errorMsgNewItem: '',
+                errorMsgUpdateListName: '',
+                errorMsgSharingTheList: ''
+            }, () => {
 
-        //         errorMsgGeneral: '',
-        //         errorMsgDeleteShopList: '',
-        //         errorMsgNewItem: '',
-        //         errorMsgUpdateListName: '',
-        //         errorMsgSharingTheList: ''
-        //     }, () => {
+                // this.ShowSharedListInfo();
+            });
 
-        //         // this.ShowSharedListInfo();
-        //     });
-
-        // })
-        // .catch(err => {
-        //     console.log(err.response);
-        //     this.setState({
-        //         errorMsgSharingTheList: err.response.data.error
-        //     })
-        // })
+        })
+        .catch(err => {
+            console.log(err.response);
+            this.setState({
+                errorMsgSharingTheList: err.response.data.error
+            })
+        })
     }
 
     DisplayShopList(list){
@@ -389,13 +398,13 @@ export default class EditShoppingList extends React.Component {
 
     //SHOW SHARED LISTS
     ShowSharedListInfo(list){
-        if (list.length === 0) return <div>You haven't shared this list with anyone.</div>
+        if (list.length === 0) return <div className="errorMsg">You haven't shared this list with anyone.</div>
 
         return list.map((list, index) => 
             <div style={{marginLeft: 20}} key={index}>
             
                 <button className="btn red" onClick={() => this.ToServer_UnShareThisList(list.userEmail)}>Unshare</button>
-                <span style={{marginLeft: 5, color: "dimgray"}}>Shared with <span style={{color: "black", fontWeight:"bold"}}>{list.userEmail}</span></span> 
+                <span style={{marginLeft: 5, color: "dimgray", verticalAlign: "middle"}}>Shared with <span style={{color: "black", fontWeight:"bold"}}>{list.userEmail}</span></span> 
         
             </div>
 
@@ -406,7 +415,7 @@ export default class EditShoppingList extends React.Component {
 
     render(){
         return <>
-                <div className="">Edit - {this.state.shoplistName} ({this.state.listItems.length}) 
+                <div>Edit - <span className="listTopic">{this.state.shoplistName} </span> ({this.state.listItems.length}) 
                 <button className="btn orange" onClick={() => this.ShowHideMenu()}> {this.state.openHideEditPanel ? " < " : " > "} </button>
                 
                 
@@ -420,11 +429,11 @@ export default class EditShoppingList extends React.Component {
                     <br/>
                     {this.state.errorMsgDeleteShopList !== '' &&  <span className="errorMsg">{this.state.errorMsgDeleteShopList}<br/></span> }
                     <input className="textInput" placeholder=" Type the list name here" name="deleteListName" value={this.state.deleteListName} onChange={this.OnChange} />
-                    <button className="btn red" onClick={() => this.ToServer_DeleteWholeList()}>Delete this list</button>
+                    <button className="btn red" onClick={() => this.ToServer_DeleteWholeList()}>Delete</button>
                     <br/>
                     {this.state.errorMsgSharingTheList !== '' &&  <span className="errorMsg">{this.state.errorMsgSharingTheList}<br/></span> }
-                    <input className="textInput" placeholder=" User to share with" name="userEmailToShareWith" value={this.state.userEmailToShareWith} onChange={this.OnChange} />
-                    <button className="btn green" onClick={() => this.ToServer_ShareThisList()}>Share this list</button>
+                    <input className="textInput" placeholder=" User email" name="userEmailToShareWith" value={this.state.userEmailToShareWith} onChange={this.OnChange} />
+                    <button className="btn green" onClick={() => this.ToServer_ShareThisList()}>Share!</button>
                     {this.ShowSharedListInfo(this.state.listSharedWith)}
                 </div>
                 }

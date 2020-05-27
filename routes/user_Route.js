@@ -194,11 +194,16 @@ router.get('/users', auth, async (req, res) => {
 
     // console.log("in users route: ", req.user);
 
+    const sharedLists = user.sharedLists;
+
+    // console.log(sharedLists);
+
     res.json({
         displayName: user.displayName,
         id: user._id,
         email: user.email,
-        admin: user.admin
+        admin: user.admin,
+        sharedLists: sharedLists
     });
 })
 
