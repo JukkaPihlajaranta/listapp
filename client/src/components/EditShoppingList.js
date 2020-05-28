@@ -404,7 +404,7 @@ export default class EditShoppingList extends React.Component {
             <div style={{marginLeft: 20}} key={index}>
             
                 <button className="btn red" onClick={() => this.ToServer_UnShareThisList(list.userEmail)}>Unshare</button>
-                <span style={{marginLeft: 5, color: "dimgray", verticalAlign: "middle"}}>Shared with <span style={{color: "black", fontWeight:"bold"}}>{list.userEmail}</span></span> 
+                <span style={{marginLeft: 5, color: "dimgray", verticalAlign: "middle"}}>Shared with <span className="listTopic" style={{color: "limegreen"}}>{list.userEmail}</span></span> 
         
             </div>
 
@@ -413,9 +413,13 @@ export default class EditShoppingList extends React.Component {
     }
 
 
+    truncate(str, n){
+        return (str.length > n) ? str.substr(0, n-1) + '...' : str;
+    };
+
     render(){
         return <>
-                <div>Edit - <span className="listTopic">{this.state.shoplistName} </span> ({this.state.listItems.length}) 
+                <div>Edit - <span className="listTopic">{this.truncate(this.state.shoplistName, 20)} </span> ({this.state.listItems.length}) 
                 <button className="btn orange" onClick={() => this.ShowHideMenu()}> {this.state.openHideEditPanel ? " < " : " > "} </button>
                 
                 

@@ -51,10 +51,24 @@ h1,h2,h3, h4{
 }
 
 /*BUTTONS*/
+
+.img_btn{
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  background: none;
+  cursor: pointer;
+}
+
+.img_btn.green:hover{ background: rgb(7, 199, 0);}
+.img_btn.orange:hover{ background: orange;}
+.img_btn.red:hover{ background: salmon;}
+.img_btn.blue:hover{ background: rgb(112, 191, 255);}
+
 .btn{
   text-decoration: none;
   border: none;
-  padding: 2px 5px;
+  padding: 0px 5px;
   outline: none;
   border-radius: 5px;
   font-family: var(--font-button);
@@ -63,7 +77,6 @@ h1,h2,h3, h4{
   text-shadow: 1px 1px 1px rgb(31, 31, 31);
   cursor: pointer;
   /* vertical-align: middle; */
-  
 }
 
 .btn.green{ color:rgb(7, 199, 0); }

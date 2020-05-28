@@ -22,7 +22,7 @@ export default class HomePage extends React.Component {
             Welcome <span className="listTopic" style={{color: "limegreen"}}>{this.context.userData.user.displayName}</span>!
             <br/>
             <br/>
-            <br/>
+            
 
             <div className="listTopic">Update 25.5.2020</div>
             <li>Finalizing the new application.</li>

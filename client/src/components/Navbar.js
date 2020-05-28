@@ -40,6 +40,7 @@ export default class Navbar extends React.Component {
                     {this.context.userData.user !== undefined &&
                         <span style={{verticalAlign: "middle"}}>
                             <Link className="btn blue" to='/home'>Home</Link>
+                            {/* <Link className="img_btn blue" to='/home'><img style={{verticalAlign: "middle"}} src="./Home.png" width="25px"/></Link> */}
                             <Link className="btn blue" to='/lists'>Lists</Link>
                             {this.context.userData.user.sharedLists !== undefined &&
                             this.context.userData.user.sharedLists.length > 0 &&
@@ -57,6 +58,7 @@ export default class Navbar extends React.Component {
                     {this.context.userData.user !== undefined  &&
                     <div style={{verticalAlign: "middle"}}>
                         <button className="btn red" onClick={() => this.Logout()}>Logout</button>
+                        {/* <button className="img_btn red" onClick={() => this.Logout()}><img style={{verticalAlign: "middle"}} src="./Logout.png" width="20px"/></button> */}
                     </div>
                     }
                 </div>

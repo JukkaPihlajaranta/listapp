@@ -81,7 +81,7 @@ export default class SharedShoppingLists extends React.Component {
                 <div key={index}>
                     <br/>
                     <div className="sharedListRow"><span className="listTopic">{list.listName} </span> 
-                    list shared by <span span className="listTopic" style={{color:"limegreen"}}>{ list.ownerName}</span>
+                    list shared by <span className="listTopic" style={{color:"limegreen"}}>{ list.ownerName}</span>
                     </div>
 
                     <div className="sharedlistWrapper">

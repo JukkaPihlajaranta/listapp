@@ -111,8 +111,10 @@ router.get('/access_admin/:id', async (req,res) =>{ ////////not ready??
 
 
 //admin
-router.get('/userlist', async (req,res) => {
+router.get('/adminroute', async (req,res) => {
 
+
+    
     try{
         const allUserList = await User.find({});
         const allShoplists = await ShoppingList.find({});

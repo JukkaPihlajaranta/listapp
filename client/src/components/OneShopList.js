@@ -155,7 +155,7 @@ export default class OneShopList extends React.Component {
                 <div className="firstRow">
                     <div style={{verticalAlign: "middle"}}>
                         <input style={{marginRight: 5}} type="checkbox" checked={this.state.showList} onChange={this.ToServer_ShowHideList} /> 
-                        <span className="listTopic">{this.truncate(this.state.listName, 14)}</span> ({this.state.readyItems}/{this.state.itemCount})
+                        <span className="listTopic">{this.truncate(this.state.listName, 20)}</span> ({this.state.readyItems}/{this.state.itemCount})
                     </div>
                     
                     {this.state.showList &&
