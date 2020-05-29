@@ -398,12 +398,13 @@ export default class EditShoppingList extends React.Component {
 
     //SHOW SHARED LISTS
     ShowSharedListInfo(list){
+        
         if (list.length === 0) return <div className="errorMsg">You haven't shared this list with anyone.</div>
 
         return list.map((list, index) => 
             <div style={{marginLeft: 20}} key={index}>
             
-                <button className="btn red" onClick={() => this.ToServer_UnShareThisList(list.userEmail)}>Unshare</button>
+                <button className="btn orange" onClick={() => this.ToServer_UnShareThisList(list.userEmail)}>Unshare</button>
                 <span style={{marginLeft: 5, color: "dimgray", verticalAlign: "middle"}}>Shared with <span className="listTopic" style={{color: "limegreen"}}>{list.userEmail}</span></span> 
         
             </div>
@@ -438,7 +439,7 @@ export default class EditShoppingList extends React.Component {
                     {this.state.errorMsgSharingTheList !== '' &&  <span className="errorMsg">{this.state.errorMsgSharingTheList}<br/></span> }
                     <input className="textInput" placeholder=" User email" name="userEmailToShareWith" value={this.state.userEmailToShareWith} onChange={this.OnChange} />
                     <button className="btn green" onClick={() => this.ToServer_ShareThisList()}>Share!</button>
-                    {this.ShowSharedListInfo(this.state.listSharedWith)}
+                    {this.state.listSharedWith !== undefined && this.ShowSharedListInfo(this.state.listSharedWith)}
                 </div>
                 }
 
