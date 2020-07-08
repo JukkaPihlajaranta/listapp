@@ -14,7 +14,7 @@ const indexRoute = require('./routes/user_Route')
 
 
 //mongoose
-mongoose.connect(process.env.DATABASE_URL /*CHANGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE */ || 'mongodb://localhost/New_shoppingList_App', {
+mongoose.connect(process.env.DATABASE_URL_________ /*CHANGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE */ || 'mongodb://localhost/New_shoppingList_App', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
@@ -46,9 +46,7 @@ if (process.env.NODE_ENV === 'production'){
 
 app.listen(PORT, console.log(`Server is listering ${PORT}`));
 
-// from package.json in client/package.json to have to connection to server.
-// ,
-//   "proxy": "http://localhost:8000"
+
 
 //"heroku-postbuild": "npm run install-client && npm run build"
 //"build": "cd client && npm run build",
